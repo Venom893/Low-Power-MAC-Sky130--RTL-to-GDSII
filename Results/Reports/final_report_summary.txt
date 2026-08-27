@@ -1,0 +1,69 @@
+OpenROAD 26Q3-1499-g46ab99414e 
+Features included (+) or not (-): +GPU +GUI +Python
+This program is licensed under the BSD-3 license. See the LICENSE file for details.
+Components of this program may be licensed under more restrictive licenses which must be honored.
+[INFO ORD-0030] Using 4 thread(s).
+read_liberty /home/yuvraj-mishra/ASIC-Project/OpenROAD-flow-scripts/flow/platforms/sky130hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_db ./results/sky130hd/mac_core/base/6_1_fill.odb
+read_sdc ./results/sky130hd/mac_core/base/6_1_fill.sdc
+source /home/yuvraj-mishra/ASIC-Project/OpenROAD-flow-scripts/flow/platforms/sky130hd/setRC.tcl
+write_db ./results/sky130hd/mac_core/base/6_final.odb
+write_sdc -no_timestamp ./results/sky130hd/mac_core/base/6_final.sdc
+Deleted 0 routing obstructions
+Warning: master sky130_ef_sc_hd__decap_12 has signal pins but no liberty cell
+[INFO RCX-0431] Defined process_corner X with ext_model_index 0
+[INFO RCX-0029] Defined extraction corner X
+[WARNING RCX-0514] The ext_model_file option is deprecated. Use set_extraction_rules_file command instead.
+[INFO RCX-0435] Reading extraction model file /home/yuvraj-mishra/ASIC-Project/OpenROAD-flow-scripts/flow/platforms/sky130hd/rcx_patterns.rules ...
+[INFO RCX-0436] RC segment generation mac_core (max_merge_res 50.0) ...
+[INFO RCX-0040] Final 1738 rc segments
+[INFO RCX-0439] Coupling Cap extraction mac_core ...
+[INFO RCX-0440] Coupling threshhold is 0.1000 fF, coupling capacitance less than 0.1000 fF will be grounded.
+[INFO RCX-0442] 62% of 3951 wires extracted
+[INFO RCX-0442] 100% of 3951 wires extracted
+[INFO RCX-0045] Extract 539 nets, 2277 rsegs, 2277 caps, 3055 ccs
+[INFO RCX-0443] 539 nets finished
+[INFO PSM-0040] All shapes on net VDD are connected.
+########## IR report #################
+Net              : VDD
+Corner           : default
+Total power      : 8.64e-04 W
+Supply voltage   : 1.80e+00 V
+Worstcase voltage: 1.80e+00 V
+Average voltage  : 1.80e+00 V
+Average IR drop  : 5.93e-06 V
+Worstcase IR drop: 7.36e-05 V
+Percentage drop  : 0.00 %
+######################################
+[INFO PSM-0040] All shapes on net VSS are connected.
+########## IR report #################
+Net              : VSS
+Corner           : default
+Total power      : 8.64e-04 W
+Supply voltage   : 0.00e+00 V
+Worstcase voltage: 7.88e-05 V
+Average voltage  : 5.72e-06 V
+Average IR drop  : 5.72e-06 V
+Worstcase IR drop: 7.88e-05 V
+Percentage drop  : 0.00 %
+######################################
+Cell type report:                       Count       Area
+  Fill cell                              3554   26736.89
+  Tap cell                                435     544.27
+  Clock buffer                              6     138.88
+  Timing Repair Buffer                     54     530.51
+  Inverter                                  5      18.77
+  Clock inverter                            2      37.54
+  Sequential cell                          33     825.79
+  Multi-Input combinational cell          331    2966.60
+  Total                                  4420   31799.25
+Report metrics stage 6, finish...
+
+==========================================================================
+finish report_design_area
+--------------------------------------------------------------------------
+Design area 5062 um^2 16% utilization.
+[WARNING GUI-0076] QSocketNotifier: Can only be used with threads started with QThread
+Elapsed time: 0:02.56[h:]min:sec. CPU time: user 2.33 sys 0.26 (100%). Peak memory: 278332KB.
+Log                       Ext     Elapsed/s Peak Memory/MB sha1sum result [0:20)
+6_report                                  2            271                  N/A

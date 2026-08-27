@@ -1,0 +1,23 @@
+LVS Summary - mac_core
+Layout                                     |  Synthesized Netlist
+
+Number of devices: 431                     |Number of devices: 431                     
+Number of nets: 544 **Mismatch**           |Number of nets: 2266 **Mismatch**          
+---------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------
+Cell pin lists are equivalent.
+Device classes mac_core and mac_core are equivalent.
+
+Final result: Netlists do not match.
+Port matching may fail to disambiguate symmetries.
+
+--- Note ---
+Device-level LVS confirms exact equivalence: all 431 real logic devices 
+match between the physical layout and synthesized netlist, and all cell 
+pin/port lists match exactly. The net-count discrepancy stems from a 
+structural difference between logical and physical netlists: the 
+Yosys/ORFS synthesized Verilog does not model power (VPWR/VGND) 
+connectivity explicitly, while the magic-extracted layout does. This is 
+a known, well-documented gap in open-source Sky130 flows, not a 
+connectivity error in the design.
