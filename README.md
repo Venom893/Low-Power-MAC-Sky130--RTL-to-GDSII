@@ -54,7 +54,7 @@ The goal was to treat this as a real tapeout-style flow rather than a toy exampl
 | `enable` | input | 1 | Starts a multiply-accumulate operation |
 | `a` | input | 8 | Multiplicand |
 | `b` | input | 8 | Multiplier |
-| `result` | output | 31 | Accumulated product |
+| `result` | output | 32 | Accumulated product |
 | `done` | output | 1 | Operation-complete flag |
 
 ---
@@ -71,16 +71,16 @@ flowchart LR
     B[/b - 8 bit/] --> MUL
 
     MUL -->|16-bit product| ADD[Adder]
-    ACC[(31-bit Accumulator Register)] --> ADD
+    ACC[(32-bit Accumulator Register)] --> ADD
     ADD --> ACC
 
     CTRL -.control.-> MUL
     CTRL -.control.-> ACC
     CTRL --> DONE([done])
-    ACC --> RES[/result - 31 bit/]
+    ACC --> RES[/result - 32 bit/]
 ```
 
-The datapath takes two 8-bit operands, multiplies them, and adds the product into a 31-bit accumulator register — wide enough to accumulate many products without overflow. A simple control FSM handles the `enable` → compute → `done` handshake and drives `rst_n` initialization.
+The datapath takes two 8-bit operands, multiplies them, and adds the product into a 32-bit accumulator register — wide enough to accumulate many products without overflow. A simple control FSM handles the `enable` → compute → `done` handshake and drives `rst_n` initialization.
 
 ---
 
