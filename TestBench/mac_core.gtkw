@@ -1,0 +1,30 @@
+[*]
+[*] GTKWave Analyzer v3.3.126 (w)1999-2026 BSI
+[*] Mon Aug 24 11:17:47 2026
+[*]
+[dumpfile] "/home/yuvraj-mishra/ASIC-Project/Low_Power_MAC/mac_core.vcd"
+[dumpfile_mtime] "Sun Aug 23 18:03:55 2026"
+[dumpfile_size] 1591
+[savefile] "/home/yuvraj-mishra/ASIC-Project/Low_Power_MAC/Results/mac_core.gtkw"
+[timestart] 10925
+[size] 1639 760
+[pos] -27 -24
+*-10.000000 14007 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] mac_core_tb.
+[sst_width] 278
+[signals_width] 126
+[sst_expanded] 1
+[sst_vpaned_height] 213
+@28
+mac_core_tb.clk
+mac_core_tb.rst_n
+mac_core_tb.enable
+mac_core_tb.start
+@22
+mac_core_tb.a[7:0]
+mac_core_tb.b[7:0]
+mac_core_tb.result[31:0]
+@28
+mac_core_tb.done
+[pattern_trace] 1
+[pattern_trace] 0
