@@ -170,5 +170,5 @@ openroad -exit flow.tcl
 Yuvraj Mishra
 
 GitHub: @Venom893
-LinkedIn: linkedin.com/in/your-profile
+LinkedIn: https://www.linkedin.com/in/yuvraj-mishra-2u/
 Specialization: ASIC/SoC Physical Design, RTL Design & Verification, Static Timing Analysis (STA).
