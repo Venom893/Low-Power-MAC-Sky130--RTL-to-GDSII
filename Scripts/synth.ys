@@ -1,0 +1,18 @@
+read_verilog -sv RTL/mac_core.sv
+
+hierarchy -top mac_core
+
+proc
+opt
+fsm
+opt
+memory
+opt
+
+techmap
+opt
+
+stat
+
+write_verilog Results/Synthesis/mac_core_synth.v
+
