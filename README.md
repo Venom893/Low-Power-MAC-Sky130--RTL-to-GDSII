@@ -1,174 +1,220 @@
-# ⚡ Low-Power 8-Bit MAC Accelerator: Complete RTL-to-GDSII ASIC Flow
+# Low-Power 8-bit MAC Accelerator — RTL to GDSII on SkyWater Sky130
 
-[![PDK: SkyWater 130nm](https://img.shields.io/badge/PDK-SkyWater%20130nm-blue.svg)](https://github.com/google/skywater-pdk)
-[![EDA: OpenROAD Flow](https://img.shields.io/badge/EDA-OpenROAD%20Flow-orange.svg)](https://theopenroadproject.org/)
-[![Synthesis: Yosys](https://img.shields.io/badge/Synthesis-Yosys%20Open-yellowgreen.svg)](https://github.com/YosysHQ/yosys)
-[![Signoff: DRC & LVS Clean](https://img.shields.io/badge/Signoff-DRC%20%7C%20LVS%20Clean-brightgreen.svg)]()
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+A complete, open-source digital ASIC implementation — from SystemVerilog RTL all the way to a signed-off GDSII layout — built entirely with open-source EDA tools on the SkyWater Sky130 PDK.
 
-An industrial-grade, end-to-end **RTL-to-GDSII Physical Implementation** of a **Low-Power 8-bit Multiply-Accumulate (MAC) Accelerator Core** targeted for the **SkyWater Sky130nm HD** (`sky130_fd_sc_hd`) standard cell technology library.
-
-This project demonstrates the complete digital ASIC implementation lifecycle — from architectural specification and functional verification to logic synthesis, physical design (floorplanning, placement, CTS, routing), static timing analysis (STA), power/IR drop analysis, and physical verification signoff (DRC/LVS).
-
----
-
-## 📊 Performance, Power & Area (PPA) Summary
-
-| Metric | Target Specification | Achieved Result | Signoff Status |
-| :--- | :--- | :--- | :---: |
-| **Operating Frequency** | 100 MHz ($T_{clk} = 10.0\text{ ns}$) | **100 MHz** ($T_{clk} = 10.0\text{ ns}$) | ✅ Met |
-| **Worst Setup Slack (WNS)** | $\ge 0.0\text{ ns}$ | **$+2.40\text{ ns}$ (Positive Slack)** | ✅ Closed |
-| **Total Power Dissipation** | $< 2.0\text{ mW}$ | **$0.864\text{ mW}$ ($864\text{ }\mu\text{W}$)** | ✅ Met |
-| **Supply Voltage ($V_{DD}$)** | $1.80\text{ V}$ nominal | **$1.80\text{ V}$** | ✅ Nominal |
-| **Worst-Case IR Drop** | $< 2.0\%$ | **$7.36\times 10^{-5}\text{ V}$ ($0.00\%$ drop)** | ✅ Clean |
-| **Total Die Area** | Optimized | **$5062\text{ }\mu\text{m}^2$** | ✅ Optimal |
-| **Synthesized Logic Area** | Minimum | **$3889.98\text{ }\mu\text{m}^2$** | ✅ Compact |
-| **Core Utilization** | $\sim 15 - 20\%$ | **$16\%$** | ✅ Congestion-Free |
-| **DRC / LVS Verification** | Zero Violations | **0 DRC Errors / 431 Active Devices Matched** | ✅ Signoff Ready |
+![RTL](https://img.shields.io/badge/RTL-SystemVerilog-1e90ff)
+![Simulation](https://img.shields.io/badge/Simulation-Icarus%20Verilog-orange)
+![Synthesis](https://img.shields.io/badge/Synthesis-Yosys-brightgreen)
+![PnR](https://img.shields.io/badge/PnR-OpenROAD-blueviolet)
+![PDK](https://img.shields.io/badge/PDK-SkyWater%20Sky130-red)
+![DRC](https://img.shields.io/badge/DRC-Clean-success)
+![LVS](https://img.shields.io/badge/LVS-Device--Verified-success)
+![License](https://img.shields.io/badge/License-MIT-yellow)
 
 ---
 
-## 🛠️ EDA Tools & Technology Stack
+## 📌 Highlights
 
-- **Hardware Description:** SystemVerilog (`IEEE 1800-2017`)
-- **Simulation & Verification:** Icarus Verilog, GTKWave
-- **Logic Synthesis & Optimization:** Yosys Open Synthesis Suite, ABC Logic Optimizer
-- **Static Timing Analysis (STA):** OpenSTA (Integrated in OpenROAD)
-- **Place & Route (P&R):** OpenROAD Flow Scripts (ORFS) / OpenROAD
-  - Floorplan, IO Placement, PDN Generation
-  - Global Placement (RePlAce) & Detailed Placement (OpenDP)
-  - Clock Tree Synthesis (TritonCTS)
-  - Global Routing (FastRoute) & Detailed Routing (TritonRoute)
-- **Parasitic RC Extraction:** OpenROAD RCX
-- **Physical Verification:** Magic VLSI, Netgen (LVS), KLayout (`sky130hd.lydrc`)
-- **PDK:** SkyWater 130nm High-Density (`sky130_fd_sc_hd`)
+- **Full RTL-to-GDSII flow**, executed end-to-end with no manual layout editing
+- **100 MHz** target frequency with **positive timing slack** at sign-off
+- **0.864 mW** total power, with **negligible IR drop** (< 0.01% on both VDD and VSS)
+- **DRC clean** — zero violations against the Sky130 KLayout rule deck
+- **LVS device-verified** — 431/431 devices match exactly between schematic and layout, with full pin/port equivalence
+- Built entirely on the **open-source Sky130 toolchain**: Yosys, OpenROAD, Magic, Netgen, KLayout
 
 ---
 
-## 🔄 ASIC Implementation Flow
+## 📖 Table of Contents
 
-RTL COMPLETE (SystemVerilog)
-│
-▼
-Waveform & Functional Verification (Icarus / GTKWave)
-│
-▼
-RTL Lint & Semantic Check (Yosys check pass - 0 issues)
-│
-▼
-Logic Synthesis & Mapping (Yosys + ABC -> Sky130 HD)
-│
-▼
-Gate-Level Netlist Generation
-│
-▼
-Static Timing Analysis Constraints (SDC @ 100 MHz, 20% IO Delay)
-│
-▼
-Floorplanning & Power Planning (PDN: VDD/VSS 1.8V Grid)
-│
-▼
-Placement (Global + Detailed + Tapcell Insertion)
-│
-▼
-Clock Tree Synthesis (CTS - Skew & Latency Optimization)
-│
-▼
-Routing (Global FastRoute -> Detailed TritonRoute)
-│
-▼
-Signoff Verification (DRC / LVS / STA / IR Drop)
-│
-▼
-Final Tapeout-Ready GDSII 🎯
-
+- [Overview](#-overview)
+- [Architecture](#-architecture)
+- [Design Flow](#-design-flow-rtl-to-gdsii)
+- [Verification & Results](#-verification--results)
+- [Layout Snapshots](#-layout-snapshots)
+- [Repository Structure](#-repository-structure)
+- [Tools & Technology Stack](#-tools--technology-stack)
+- [How to Reproduce](#-how-to-reproduce)
+- [Engineering Notes](#-engineering-notes)
+- [License](#-license)
 
 ---
 
-## 🖼️ Physical Design Layout & Verification Gallery
+## 🔍 Overview
 
-### 1. Layout, Placement & Clock Distribution
-| Full Chip Composite Layout | Standard Cell Placement | Clock Tree Network |
-| :---: | :---: | :---: |
-| <img src="Results/Images/final_all.webp" width="280"/> | <img src="Results/Images/final_placement.webp" width="280"/> | <img src="Results/Images/final_clocks.webp" width="280"/> |
-| *Final full-die layout stream* | *Standard cells placed at 16% density* | *Balanced clock tree network* |
+This project implements an **8-bit Multiply-Accumulate (MAC) unit** — a core building block used in DSP pipelines, CNN/ML accelerators, and FIR filters — and carries it through the complete digital ASIC design cycle: RTL design, functional verification, logic synthesis, and full physical implementation (floorplanning, placement, clock tree synthesis, routing) down to a fabrication-ready GDSII layout, with DRC and LVS sign-off.
 
-### 2. Routing, Congestion & Critical Timing Path
-| Detailed Routing View | Routing Congestion Map | Worst Timing Slack Path |
-| :---: | :---: | :---: |
-| <img src="Results/Images/final_routing.webp" width="280"/> | <img src="Results/Images/final_congestion.webp" width="280"/> | <img src="Results/Images/final_worst_path.webp" width="280"/> |
-| *Metal layer routing with zero DRCs* | *Uniform routing density, no hotspots* | *Critical path timing (+2.4ns slack)* |
+The goal was to treat this as a real tapeout-style flow rather than a toy example — every stage produces its own report, and every result below is pulled directly from those reports rather than estimated.
 
-### 3. Power Integrity & Resizer Optimization
-| Static IR Drop Analysis | Gate Resizing & Buffer Insertion |
-| :---: | :---: |
-| <img src="Results/Images/final_ir_drop.webp" width="420"/> | <img src="Results/Images/final_resizer.webp" width="420"/> |
-| *Worst-case IR Drop: $0.00\%$ ($7.36\times 10^{-5}\text{ V}$)* | *Hold/Setup buffer insertion and gate sizing* |
+**Top-level interface:**
+
+| Signal | Direction | Width | Description |
+|---|---|---|---|
+| `clk` | input | 1 | System clock |
+| `rst_n` | input | 1 | Active-low asynchronous reset |
+| `enable` | input | 1 | Starts a multiply-accumulate operation |
+| `a` | input | 8 | Multiplicand |
+| `b` | input | 8 | Multiplier |
+| `result` | output | 31 | Accumulated product |
+| `done` | output | 1 | Operation-complete flag |
 
 ---
 
-## 🔍 In-Depth Engineering Highlights
+## 🏗 Architecture
 
-### 1. Logic Synthesis & Technology Mapping (`Scripts/synth.ys`)
-- **Total Logic Cells Synthesized:** 384 cells
-- **Sequential Cell Area:** $825.79\text{ }\mu\text{m}^2$ ($21.23\%$ of total logic area, 33 $\times$ `sky130_fd_sc_hd__dfrtp_1` flip-flops)
-- **Arithmetic & Combinational Cells:** 50 $\times$ `fa_1` (Full Adders), 41 $\times$ `ha_1` (Half Adders), 71 $\times$ `and3_1`, 38 $\times$ `nand2_1`
-- **RTL Lint Check:** Clean synthesis with 0 inferred latches, 0 unmapped cells, and 0 multi-driven nets.
+```mermaid
+flowchart LR
+    CLK([clk]) --> CTRL[Control FSM]
+    RSTN([rst_n]) --> CTRL
+    EN([enable]) --> CTRL
 
-### 2. Timing Budgeting & SDC (`Constraints/constraint.sdc`)
-```tcl
-current_design mac_core
+    A[/a - 8 bit/] --> MUL[8x8 Multiplier]
+    B[/b - 8 bit/] --> MUL
 
-set clk_name   clk
-set clk_period 10.0
-set clk_io_pct 0.2
+    MUL -->|16-bit product| ADD[Adder]
+    ACC[(31-bit Accumulator Register)] --> ADD
+    ADD --> ACC
 
-create_clock -name $clk_name -period $clk_period [get_ports clk]
-set_false_path -from [get_ports rst_n]
+    CTRL -.control.-> MUL
+    CTRL -.control.-> ACC
+    CTRL --> DONE([done])
+    ACC --> RES[/result - 31 bit/]
+```
 
-set_input_delay  [expr $clk_period * $clk_io_pct] -clock $clk_name [get_ports {enable start a b}]
-set_output_delay [expr $clk_period * $clk_io_pct] -clock $clk_name [get_ports {result done}]
-Timing Closure: Closed with $+2.40\text{ ns}$ setup slack margin under nominal operating corners with zero setup/hold violations.
-3. Power Integrity & IR Drop Analysis
-Nominal $V_{DD}$: $1.80\text{ V}$
-Worst-case Voltage ($V_{DD}$): $1.80\text{ V}$
-Average IR Drop: $5.93\times 10^{-6}\text{ V}$ ($V_{DD}$) / $5.72\times 10^{-6}\text{ V}$ ($V_{SS}$)
-Worst-case IR Drop: $7.36\times 10^{-5}\text{ V}$ ($0.00%$ drop), verifying absolute power rail stability.
-4. Physical Verification (DRC & LVS Signoff)
-DRC Signoff: Verified using KLayout SkyWater 130nm DRC deck (sky130hd.lydrc). 0 DRC errors across all routing layers (li1, met1 - met5).
-LVS Signoff: Layout extraction vs. synthesized netlist via Netgen confirms 100% device-level equivalence (431 active devices matched).
-📁 Repository Structure
-.
+The datapath takes two 8-bit operands, multiplies them, and adds the product into a 31-bit accumulator register — wide enough to accumulate many products without overflow. A simple control FSM handles the `enable` → compute → `done` handshake and drives `rst_n` initialization.
+
+---
+
+## 🔄 Design Flow (RTL to GDSII)
+
+```mermaid
+flowchart TD
+    A["RTL Design (SystemVerilog)"] --> B["Functional Verification<br/>Icarus Verilog + GTKWave"]
+    B --> C["RTL Lint<br/>Yosys check"]
+    C --> D["Logic Synthesis<br/>Yosys"]
+    D --> E["Gate-Level Netlist"]
+    E --> F["Static Timing Analysis<br/>OpenSTA"]
+    F --> G["Floorplanning"]
+    G --> H["Power Planning (PDN)"]
+    H --> I["Placement"]
+    I --> J["Clock Tree Synthesis"]
+    J --> K["Routing"]
+    K --> L["Sign-off: DRC / LVS / STA"]
+    L --> M["GDSII ✅"]
+```
+
+Implemented using **OpenROAD-flow-scripts (ORFS)** targeting the `sky130hd` standard cell library.
+
+---
+
+## ✅ Verification & Results
+
+| Metric | Result |
+|---|---|
+| Technology | SkyWater Sky130, `sky130_fd_sc_hd` standard cells |
+| Target frequency | 100 MHz (10 ns clock period) |
+| Timing | Positive slack maintained through sign-off — timing closed |
+| Core area | 5,062 µm² |
+| Utilization | 16% |
+| Total placed instances | 4,420 (431 logic/sequential + 3,554 fill + 435 tap cells) |
+| Total power | 0.864 mW |
+| Worst-case IR drop | 78.8 µV on VDD/VSS (~0.00% of supply) |
+| DRC | **Clean** — 0 violations against the Sky130 KLayout DRC deck |
+| LVS | **431/431 devices match exactly**; all cell pin/port lists equivalent (see note below) |
+| Functional simulation | Passed — Icarus Verilog + GTKWave |
+| RTL lint | Passed — Yosys `check`, 0 problems reported |
+
+> **A note on LVS:** device-level comparison is an exact match — every one of the 431 real logic devices in the layout corresponds one-to-one with the synthesized netlist, and all cell pin lists are equivalent. Netgen additionally flags a *net-count* difference (544 vs. 2,266), which traces back to a well-documented characteristic of open-source Sky130 flows: the Yosys-synthesized netlist doesn't explicitly enumerate per-cell VPWR/VGND connectivity the way the Magic-extracted layout does. IR-drop analysis confirms the actual power/ground network is fully connected with negligible drop, so this is a netlist-modeling artifact rather than a physical connectivity defect.
+
+---
+
+## 🖼 Layout Snapshots
+
+<p align="center">
+  <img src="Results/Images/final_all.webp" width="45%" alt="Final layout - full view">
+  <img src="Results/Images/final_placement.webp" width="45%" alt="Placement view">
+</p>
+<p align="center">
+  <img src="Results/Images/final_routing.webp" width="45%" alt="Routing view">
+  <img src="Results/Images/final_ir_drop.webp" width="45%" alt="IR drop map">
+</p>
+
+Full GDSII layout view and the verification waveform are available in [`Results/Images/gdsii_layoutview.pdf`](Results/Images/gdsii_layoutview.pdf) and [`Results/Images/gtk_verification_waveform.pdf`](Results/Images/gtk_verification_waveform.pdf).
+
+---
+
+## 📂 Repository Structure
+
+```
+Low-Power-MAC-Sky130--RTL-to-GDSII/
 ├── Constraints/
-│   └── constraint.sdc                # SDC timing constraints file (100 MHz target)
+│   └── constraint.sdc            # Timing constraints (100 MHz clock, I/O delays)
 ├── GDS/
-│   └── mac_core_final.gds            # Final signoff GDSII layout stream
+│   └── mac_core_final.gds        # Final signed-off GDSII layout
 ├── RTL/
-│   └── mac_core.sv                   # Synthesizable 8-bit MAC accelerator RTL
+│   └── mac_core.sv               # Design RTL
 ├── Results/
-│   ├── Images/                       # Layout, CTS, routing, and IR drop visual reports
-│   ├── Reports/                      # Detailed STA, CTS, DRC, LVS, and area logs
-│   └── Synthesis/                    # Gate-level netlist & synthesis report files
+│   ├── Images/                   # Layout snapshots, waveform, GDS view
+│   ├── Reports/                  # DRC, LVS, timing, power, synthesis reports
+│   └── Synthesis/                # Synthesized gate-level netlist + report
 ├── Scripts/
-│   └── synth.ys                      # Yosys synthesis and mapping script
+│   └── synth.ys                  # Yosys synthesis script
 ├── TestBench/
-│   ├── mac_core_tb.sv                # Comprehensive testbench
-│   └── mac_core.gtkw                 # GTKWave waveform viewer configuration
-├── LICENSE                           # MIT License
+│   ├── mac_core_tb.sv            # Testbench
+│   └── mac_core.gtkw             # GTKWave save file
+├── LICENSE
 └── README.md
-🚀 How to Reproduce
-1. Functional Simulation & Waveform Inspection
-iverilog -g2012 -o mac_sim RTL/mac_core.sv TestBench/mac_core_tb.sv
-vvp mac_sim
-gtkwave TestBench/mac_core.gtkw
-2. Logic Synthesis
-yosys -s Scripts/synth.ys
-3. Physical Design Flow (OpenROAD)
-# Execute OpenROAD physical design flow
-openroad -exit flow.tcl
-👤 Author
-Yuvraj Mishra
+```
 
-GitHub: @Venom893
-LinkedIn: https://www.linkedin.com/in/yuvraj-mishra-2u/
-Specialization: ASIC/SoC Physical Design, RTL Design & Verification, Static Timing Analysis (STA).
+---
+
+## 🛠 Tools & Technology Stack
+
+| Stage | Tool |
+|---|---|
+| RTL Design | SystemVerilog |
+| Functional Simulation | Icarus Verilog |
+| Waveform Viewing | GTKWave |
+| Logic Synthesis | Yosys |
+| Static Timing Analysis | OpenSTA |
+| Place & Route | OpenROAD (via OpenROAD-flow-scripts) |
+| Layout Extraction | Magic |
+| LVS | Netgen |
+| DRC / GDS Streaming | KLayout |
+| PDK | SkyWater Sky130 (`sky130hd`) |
+
+---
+
+## ▶ How to Reproduce
+
+```bash
+# 1. Functional simulation
+iverilog -g2012 -o mac_core_tb TestBench/mac_core_tb.sv RTL/mac_core.sv
+vvp mac_core_tb
+gtkwave TestBench/mac_core.gtkw
+
+# 2. Synthesis (Yosys)
+yosys Scripts/synth.ys
+
+# 3. Physical implementation (OpenROAD-flow-scripts)
+# from your ORFS flow/ directory, with this design configured under a sky130hd config:
+make DESIGN_CONFIG=./designs/sky130hd/mac_core/config.mk
+```
+
+---
+
+## 🧠 Engineering Notes
+
+The most instructive part of this project wasn't getting a clean run on the first try — it was the LVS debug cycle. An initial netgen comparison reported a large net-count mismatch and a failed top-level pin match on the power net. Rather than treating that as a black box "fail," I traced it back through the DEF pin definitions and IR-drop reports to confirm the physical power distribution network was fully connected, then isolated the mismatch to a known modeling gap between Yosys-synthesized netlists (which don't explicitly declare per-cell power pin connectivity) and Magic's layout extraction (which does). That distinction — a real connectivity defect vs. a netlist-representation difference — is exactly the kind of judgment call this flow is meant to build.
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+## 👤 Author
+
+**Yuvraj Mishra**
+Built as an end-to-end ASIC/physical design portfolio project targeting entry-level VLSI/ASIC/SoC design roles.
