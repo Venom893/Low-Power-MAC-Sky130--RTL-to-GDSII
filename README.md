@@ -2,14 +2,22 @@
 
 A complete, open-source digital ASIC implementation — from SystemVerilog RTL all the way to a signed-off GDSII layout — built entirely with open-source EDA tools on the SkyWater Sky130 PDK.
 
-![RTL](https://img.shields.io/badge/RTL-SystemVerilog-1e90ff)
-![Simulation](https://img.shields.io/badge/Simulation-Icarus%20Verilog-orange)
-![Synthesis](https://img.shields.io/badge/Synthesis-Yosys-brightgreen)
-![PnR](https://img.shields.io/badge/PnR-OpenROAD-blueviolet)
-![PDK](https://img.shields.io/badge/PDK-SkyWater%20Sky130-red)
-![DRC](https://img.shields.io/badge/DRC-Clean-success)
-![LVS](https://img.shields.io/badge/LVS-Device--Verified-success)
-![License](https://img.shields.io/badge/License-MIT-yellow)
+<p align="left">
+  <img src="https://img.shields.io/badge/RTL-SystemVerilog-1e90ff" alt="RTL">
+  <img src="https://img.shields.io/badge/Simulation-Icarus%20Verilog-orange" alt="Simulation">
+  <img src="https://img.shields.io/badge/Synthesis-Yosys-brightgreen" alt="Synthesis">
+  <img src="https://img.shields.io/badge/PnR-OpenROAD-blueviolet" alt="PnR">
+  <img src="https://img.shields.io/badge/PDK-SkyWater%20Sky130-red" alt="PDK">
+  <img src="https://img.shields.io/badge/DRC-Clean-success" alt="DRC">
+  <img src="https://img.shields.io/badge/LVS-Device--Verified-success" alt="LVS">
+  <img src="https://img.shields.io/badge/License-MIT-yellow" alt="License">
+</p>
+<p align="left">
+  <img src="https://img.shields.io/github/last-commit/Venom893/Low-Power-MAC-Sky130--RTL-to-GDSII" alt="Last commit">
+  <img src="https://img.shields.io/github/repo-size/Venom893/Low-Power-MAC-Sky130--RTL-to-GDSII" alt="Repo size">
+</p>
+
+> **Why a MAC unit?** The Multiply-Accumulate operation is the single most repeated instruction inside every DSP pipeline, FIR filter, and neural-network accelerator on the planet — it's the arithmetic core that GPUs and NPUs execute billions of times per second. This project takes that exact building block through the same signoff-grade flow used in real tapeouts, end to end.
 
 ---
 
@@ -31,6 +39,7 @@ A complete, open-source digital ASIC implementation — from SystemVerilog RTL a
 - [Design Flow](#-design-flow-rtl-to-gdsii)
 - [Verification & Results](#-verification--results)
 - [Layout Snapshots](#-layout-snapshots)
+- [Skills Demonstrated](#-skills-demonstrated)
 - [Repository Structure](#-repository-structure)
 - [Tools & Technology Stack](#-tools--technology-stack)
 - [How to Reproduce](#-how-to-reproduce)
@@ -41,7 +50,7 @@ A complete, open-source digital ASIC implementation — from SystemVerilog RTL a
 
 ## 🔍 Overview
 
-This project implements an **8-bit Multiply-Accumulate (MAC) unit** — a core building block used in DSP pipelines, CNN/ML accelerators, and FIR filters — and carries it through the complete digital ASIC design cycle: RTL design, functional verification, logic synthesis, and full physical implementation (floorplanning, placement, clock tree synthesis, routing) down to a fabrication-ready GDSII layout, with DRC and LVS sign-off.
+This project implements an **8-bit Multiply-Accumulate (MAC) unit** and carries it through the complete digital ASIC design cycle: RTL design, functional verification, logic synthesis, and full physical implementation (floorplanning, placement, clock tree synthesis, routing) down to a fabrication-ready GDSII layout, with DRC and LVS sign-off — the two mandatory checks that confirm a layout is both manufacturable (DRC) and electrically identical to the intended design (LVS) before any real chip can be fabricated.
 
 The goal was to treat this as a real tapeout-style flow rather than a toy example — every stage produces its own report, and every result below is pulled directly from those reports rather than estimated.
 
@@ -130,15 +139,31 @@ Implemented using **OpenROAD-flow-scripts (ORFS)** targeting the `sky130hd` stan
 ## 🖼 Layout Snapshots
 
 <p align="center">
-  <img src="Results/Images/final_all.webp" width="45%" alt="Final layout - full view">
-  <img src="Results/Images/final_placement.webp" width="45%" alt="Placement view">
+  <img src="Results/Images/final_all.webp" width="45%" alt="Final layout - full view"><br/>
+  <sub>Full chip layout</sub>
 </p>
 <p align="center">
-  <img src="Results/Images/final_routing.webp" width="45%" alt="Routing view">
-  <img src="Results/Images/final_ir_drop.webp" width="45%" alt="IR drop map">
+  <img src="Results/Images/final_placement.webp" width="45%" alt="Placement view">
+  <img src="Results/Images/final_routing.webp" width="45%" alt="Routing view"><br/>
+  <sub>Placement (left) &nbsp;•&nbsp; Routing (right)</sub>
+</p>
+<p align="center">
+  <img src="Results/Images/final_ir_drop.webp" width="45%" alt="IR drop map"><br/>
+  <sub>IR drop map — negligible drop across the power grid</sub>
 </p>
 
 Full GDSII layout view and the verification waveform are available in [`Results/Images/gdsii_layoutview.pdf`](Results/Images/gdsii_layoutview.pdf) and [`Results/Images/gtk_verification_waveform.pdf`](Results/Images/gtk_verification_waveform.pdf).
+
+---
+
+## 💡 Skills Demonstrated
+
+- **RTL design & functional verification** — SystemVerilog design, testbench-driven simulation, waveform debug
+- **Logic synthesis** — gate-level netlist generation and lint sign-off
+- **Physical design** — floorplanning, power planning (PDN), placement, clock tree synthesis, routing
+- **Timing, power & IR-drop analysis** — STA-driven timing closure, power estimation, IR-drop signoff
+- **Physical verification** — DRC and LVS signoff, including independent root-cause debugging of a real tool-level discrepancy
+- **Technical documentation** — reproducible flow with full logs, reports, and results published alongside the design
 
 ---
 
@@ -217,4 +242,6 @@ This project is licensed under the [MIT License](LICENSE).
 ## 👤 Author
 
 **Yuvraj Mishra**
-Built as an end-to-end ASIC/physical design portfolio project targeting entry-level VLSI/ASIC/SoC design roles.
+Electrical Engineering graduate building a portfolio of tapeout-style projects — analog/mixed-signal IC design and digital ASIC physical design. Open to entry-level Physical Design, RTL/SoC, and Analog/Mixed-Signal Design roles.
+
+[LinkedIn](https://www.linkedin.com/in/yuvraj-mishra-2u) · [GitHub](https://github.com/Venom893) · yuvimishra5154@gmail.com
